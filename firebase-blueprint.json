@@ -1,0 +1,241 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Authenticated user profile and biometric stride calibration settings.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth UID matching the document ID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name.",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Verified user email address.",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Optional profile avatar URL.",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "dailyGoal": {
+          "type": "number",
+          "description": "Target daily step count."
+        },
+        "heightCm": {
+          "type": "number",
+          "description": "User height in centimeters for Apple Health stride calculation."
+        },
+        "weightKg": {
+          "type": "number",
+          "description": "User weight in kilograms for active calorie estimation."
+        },
+        "strideLengthCm": {
+          "type": "number",
+          "description": "Calibrated walking stride length in centimeters."
+        },
+        "unitSystem": {
+          "type": "string",
+          "enum": ["metric", "imperial"],
+          "description": "Preferred measurement system."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server update timestamp."
+        }
+      },
+      "required": [
+        "uid",
+        "displayName",
+        "email",
+        "dailyGoal",
+        "heightCm",
+        "weightKg",
+        "strideLengthCm",
+        "unitSystem",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "DailyStepRecord": {
+      "title": "DailyStepRecord",
+      "description": "Daily aggregated step counter and Apple Health-equivalent metrics.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Owner Firebase Auth UID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "date": {
+          "type": "string",
+          "description": "ISO local date key YYYY-MM-DD.",
+          "minLength": 10,
+          "maxLength": 10,
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "steps": {
+          "type": "number",
+          "description": "Total steps recorded for the day."
+        },
+        "goal": {
+          "type": "number",
+          "description": "Daily step goal snapshot for that day."
+        },
+        "distanceMeters": {
+          "type": "number",
+          "description": "Calculated walking and running distance in meters."
+        },
+        "calories": {
+          "type": "number",
+          "description": "Estimated active energy burned in kilocalories."
+        },
+        "activeMinutes": {
+          "type": "number",
+          "description": "Estimated active movement minutes."
+        },
+        "flightsClimbed": {
+          "type": "number",
+          "description": "Flights climbed or elevation equivalent."
+        },
+        "hourlySteps": {
+          "type": "array",
+          "description": "24-element array of step counts by hour (0-23)."
+        },
+        "source": {
+          "type": "string",
+          "enum": ["sensor", "manual", "import", "hybrid"],
+          "description": "Origin of the step count data."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server update timestamp."
+        }
+      },
+      "required": [
+        "uid",
+        "date",
+        "steps",
+        "goal",
+        "distanceMeters",
+        "calories",
+        "activeMinutes",
+        "flightsClimbed",
+        "hourlySteps",
+        "source",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "StepSession": {
+      "title": "StepSession",
+      "description": "Individual recorded walking session, pedometer capture, or imported health workout.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Owner Firebase Auth UID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "date": {
+          "type": "string",
+          "description": "ISO local date YYYY-MM-DD.",
+          "minLength": 10,
+          "maxLength": 10,
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "steps": {
+          "type": "number",
+          "description": "Steps recorded during this session."
+        },
+        "durationSeconds": {
+          "type": "number",
+          "description": "Session duration in seconds."
+        },
+        "distanceMeters": {
+          "type": "number",
+          "description": "Session distance in meters."
+        },
+        "calories": {
+          "type": "number",
+          "description": "Session active energy in kilocalories."
+        },
+        "avgCadenceSpm": {
+          "type": "number",
+          "description": "Average cadence in steps per minute."
+        },
+        "source": {
+          "type": "string",
+          "enum": ["pedometer", "manual", "apple_health_import"],
+          "description": "Capture source."
+        },
+        "note": {
+          "type": "string",
+          "description": "Optional short description of the walk or import.",
+          "minLength": 0,
+          "maxLength": 140
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        }
+      },
+      "required": [
+        "uid",
+        "date",
+        "steps",
+        "durationSeconds",
+        "distanceMeters",
+        "calories",
+        "avgCadenceSpm",
+        "source",
+        "note",
+        "createdAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Private user profile and stride calibration settings."
+    },
+    "/users/{userId}/dailySteps/{dateKey}": {
+      "schema": { "$ref": "#/entities/DailyStepRecord" },
+      "description": "Daily step counter ledger and 24-hour distribution keyed by YYYY-MM-DD."
+    },
+    "/users/{userId}/stepSessions/{sessionId}": {
+      "schema": { "$ref": "#/entities/StepSession" },
+      "description": "Immutable log of recorded pedometer sessions, manual logs, and Apple Health imports."
+    }
+  }
+}

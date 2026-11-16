@@ -1,0 +1,6 @@
+{
+  "name": "StridePulse",
+  "description": "Apple Health-inspired cross-platform step counter, stride-calibrated activity tracker, and persistent cloud history for Android, iOS, and Web.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
